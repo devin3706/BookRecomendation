@@ -33,7 +33,7 @@ def fetch_poster(suggestion):
 def recommend_book(book_name):
     books_list = []
     book_id = np.where(book_pivot.index == book_name)[0][0]
-    distance, suggestion = model.kneighbors(book_pivot.iloc[book_id,:].values.reshape(1,-1), n_neighbors=6 )
+    distance, suggestion = model.kneighbors(book_pivot.iloc[book_id,:].values.reshape(1,-1), n_neighbors=15)
 
     print(suggestion)
 
@@ -53,21 +53,26 @@ selected_books = st.selectbox(
 )
 
 if st.button('Show Recommendation'):
-    recommended_books,poster_url = recommend_book(selected_books)
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.text(recommended_books[1])
-        st.image(poster_url[1])
-    with col2:
-        st.text(recommended_books[2])
-        st.image(poster_url[2])
+    recommended_books, poster_url = recommend_book(selected_books)
 
-    with col3:
-        st.text(recommended_books[3])
-        st.image(poster_url[3])
-    with col4:
-        st.text(recommended_books[4])
-        st.image(poster_url[4])
-    with col5:
-        st.text(recommended_books[5])
-        st.image(poster_url[5])
+    # Define the number of columns and rows
+    num_columns = 4
+    num_rows = 3
+
+    # Create a container for the recommendations
+    for row in range(num_rows):
+        cols = st.columns(num_columns)
+
+        for col in range(num_columns):
+            index = row * num_columns + col
+            if index < len(recommended_books):  # Check if index is within range
+                with cols[col]:
+                    # Set the height for each container using markdown with HTML
+                    st.markdown(
+                        f"""
+                        <div style="height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <div>{recommended_books[index]}</div>
+                            <img src="{poster_url[index]}" style="max-height: 150px; width: auto;"/>
+                        </div>
+                        """,
+                        unsafe_allow_html=True)
