@@ -1,7 +1,6 @@
 import pickle
 import streamlit as st
 import numpy as np
-import sklearn
 
 st.header('Book Recommender System Using Machine Learning')
 model = pickle.load(open('artifacts/model.pkl', 'rb'))
