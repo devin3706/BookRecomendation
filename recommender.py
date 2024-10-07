@@ -22,7 +22,7 @@ def show_recommender():
 
     user_id = st.session_state.user_id
 
-    st.title(f"Weolcome {user_id}")
+    st.title(f"Welcome {user_id}")
     st.header('Book Recommender')
 
     # Function to get books
