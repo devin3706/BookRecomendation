@@ -1,2 +1,2 @@
 # BookRecomendation
-Book Recomendation System using machine learning
+Book Recommendation System using machine learning
